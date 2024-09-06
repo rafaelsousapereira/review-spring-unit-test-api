@@ -1,5 +1,6 @@
 package br.com.rafael.reviewspringunittestapi;
 
+import br.com.rafael.reviewspringunittestapi.domain.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
