@@ -1,3 +1,5 @@
 spring:
   application:
     name: review-spring-unit-test-api
+  profiles:
+    active: local
