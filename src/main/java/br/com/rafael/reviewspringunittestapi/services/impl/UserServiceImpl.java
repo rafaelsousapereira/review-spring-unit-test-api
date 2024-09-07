@@ -2,9 +2,11 @@ package br.com.rafael.reviewspringunittestapi.services.impl;
 
 import br.com.rafael.reviewspringunittestapi.UserRepository;
 import br.com.rafael.reviewspringunittestapi.domain.User;
+import br.com.rafael.reviewspringunittestapi.domain.dto.UserDTO;
 import br.com.rafael.reviewspringunittestapi.services.UserService;
 import br.com.rafael.reviewspringunittestapi.services.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final ModelMapper mapper;
 
     @Override
     public User findById(Integer id) {
@@ -26,6 +29,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return this.repository.findAll();
+    }
+
+    @Override
+    public User create(UserDTO obj) {
+        var user = mapper.map(obj, User.class);
+
+        return repository.save(user);
     }
 
 }

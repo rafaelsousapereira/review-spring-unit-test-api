@@ -5,10 +5,8 @@ import br.com.rafael.reviewspringunittestapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -33,5 +31,14 @@ public class UserResource {
         var users = this.userService.findAll().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
 
         return ResponseEntity.ok().body(users);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> create(@RequestBody  UserDTO obj) {
+        var newObj = this.userService.create(obj);
+        var uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 }
