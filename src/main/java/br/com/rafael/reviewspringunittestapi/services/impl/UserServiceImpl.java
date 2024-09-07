@@ -3,7 +3,7 @@ package br.com.rafael.reviewspringunittestapi.services.impl;
 import br.com.rafael.reviewspringunittestapi.UserRepository;
 import br.com.rafael.reviewspringunittestapi.domain.User;
 import br.com.rafael.reviewspringunittestapi.services.UserService;
-import jakarta.persistence.EntityNotFoundException;
+import br.com.rafael.reviewspringunittestapi.services.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         Optional<User> obj = repository.findById(id);
-        return obj.orElse(null);
+
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Resource not found"));
     }
 }
