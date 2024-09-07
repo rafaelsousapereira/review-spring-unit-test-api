@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
@@ -24,5 +26,12 @@ public class UserResource {
         var result = mapper.map(user, UserDTO.class);
 
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll() {
+        var users = this.userService.findAll().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
+
+        return ResponseEntity.ok().body(users);
     }
 }

@@ -7,6 +7,7 @@ import br.com.rafael.reviewspringunittestapi.services.exception.ObjectNotFoundEx
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -21,4 +22,10 @@ public class UserServiceImpl implements UserService {
 
         return obj.orElseThrow(() -> new ObjectNotFoundException("Resource not found"));
     }
+
+    @Override
+    public List<User> findAll() {
+        return this.repository.findAll();
+    }
+
 }
