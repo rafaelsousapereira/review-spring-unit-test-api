@@ -4,6 +4,7 @@ import br.com.rafael.reviewspringunittestapi.UserRepository;
 import br.com.rafael.reviewspringunittestapi.domain.User;
 import br.com.rafael.reviewspringunittestapi.domain.dto.UserDTO;
 import br.com.rafael.reviewspringunittestapi.services.UserService;
+import br.com.rafael.reviewspringunittestapi.services.exception.DataIntegrateViolationException;
 import br.com.rafael.reviewspringunittestapi.services.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,9 +34,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserDTO obj) {
+        findByEmail(obj);
         var user = mapper.map(obj, User.class);
 
         return repository.save(user);
+    }
+
+    private void findByEmail(UserDTO obj) {
+         Optional<User> user = this.repository.findByEmail(obj.getEmail());
+
+         if (user.isPresent()) {
+             throw new DataIntegrateViolationException("E-mail already exists at system");
+         }
     }
 
 }
