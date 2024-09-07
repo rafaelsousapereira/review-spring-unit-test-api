@@ -18,7 +18,9 @@ public class UserResource {
     private final ModelMapper mapper;
     private final UserService userService;
 
-    @GetMapping("/{id}")
+    public static final String ID = "/{id}";
+
+    @GetMapping(ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
         var user = this.userService.findById(id);
         var result = mapper.map(user, UserDTO.class);
@@ -37,16 +39,23 @@ public class UserResource {
     public ResponseEntity<UserDTO> create(@RequestBody  UserDTO obj) {
         var newObj = this.userService.create(obj);
         var uri = ServletUriComponentsBuilder
-                .fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+                .fromCurrentRequestUri().path(ID).buildAndExpand(newObj.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(ID)
     public ResponseEntity<UserDTO> update(@PathVariable  Integer id, @RequestBody UserDTO obj) {
         obj.setId(id);
         var user = mapper.map(this.userService.update(obj), UserDTO.class);
 
         return ResponseEntity.ok().body(user);
+    }
+
+    @DeleteMapping(ID)
+    public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
+        this.userService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

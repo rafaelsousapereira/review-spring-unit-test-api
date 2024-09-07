@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
         return this.repository.save(user);
     }
 
+    @Override
+    public void delete(Integer id) {
+        findById(id);
+        this.repository.deleteById(id);
+    }
+
     private void findByEmail(UserDTO obj) {
          Optional<User> user = this.repository.findByEmail(obj.getEmail());
 
