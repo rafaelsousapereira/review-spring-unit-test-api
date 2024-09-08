@@ -1,4 +1,4 @@
-package br.com.rafael.reviewspringunittestapi;
+package br.com.rafael.reviewspringunittestapi.repositories;
 
 import br.com.rafael.reviewspringunittestapi.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

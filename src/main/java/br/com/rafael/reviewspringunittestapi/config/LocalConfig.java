@@ -1,6 +1,6 @@
 package br.com.rafael.reviewspringunittestapi.config;
 
-import br.com.rafael.reviewspringunittestapi.UserRepository;
+import br.com.rafael.reviewspringunittestapi.repositories.UserRepository;
 import br.com.rafael.reviewspringunittestapi.domain.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
